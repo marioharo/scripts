@@ -1,0 +1,31 @@
+# Archivos del sistema macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+
+# Archivos de backup o temporales de editores
+*~
+*.swp
+*.swo
+*.bak
+*.tmp
+
+# Archivos de logs o salidas
+*.log
+*.out
+
+# Metadatos de Finder
+._*
+
+# Archivos de terminal o shells
+*.zsh_history
+*.bash_history
+
+# Archivos compilados o binarios (por si pruebas `shc`, `go`, etc.)
+*.bin
+*.exe
+*.o
+*.pyc
+__pycache__/
+
