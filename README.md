@@ -8,14 +8,14 @@ Diseñado especialmente para macOS.
 Actualmente incluye:
 
 - `bytes2human`: Convierte bytes a un formato legible (KB, MB, GB, TB, etc.)
+- `respaldo-espejo`: Crea un respaldo (on premise) entre un directorio específico y un dispositivo externo
 
 ## 🚀 Uso
 
-1. Los scripts son alojados y convertidos en binario en la ruta:
--  /usr/local/bin
+1. Para llamar desde la terminal a los scripts deberían ser alojados en la ruta:
+- /usr/local/bin
 
-2. Asegúrate de dar permisos de ejecución a los scripts:
+2. Asegúrate de darles permiso de ejecución:
 
-```bash
-chmod +x nombre-del-script
+- chmod +x nombre-del-script
 
