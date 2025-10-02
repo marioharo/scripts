@@ -4,10 +4,10 @@ echo "===== Script de Respaldo (Modo Espejo) ====="
 echo ""
 
 # Preguntar carpeta origen
-read -e -p "📂 Ingresa la ruta de la carpeta a respaldar:" origen
+read -e -p "📂 Ingrese la ruta de la carpeta de origen:" origen
 
 # Preguntar carpeta destino
-read -e -p "💾 Ingresa la ruta del dispositivo de destino:" destino
+read -e -p "💾 Ingrese la ruta de la carpeta de destino:" destino
 
 # Validar si existen
 if [ ! -d "$origen" ]; then
