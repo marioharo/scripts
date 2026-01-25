@@ -1,0 +1,76 @@
+#!/bin/zsh
+
+# --- Configuración por defecto ---
+OUT_DIR="./pdf-convertido"
+PREFIX=""
+EXT=""
+
+# Función de ayuda (Help)
+usage() {
+    echo "Use: to-pdf -t [ppt|doc] [-p prefijo]"
+    echo "Options:"
+    echo "  -t : Tipo de archivo a convertir (ppt o doc) [Obligatorio]"
+    echo "  -p : Prefijo opcional para el nombre del archivo"
+    echo "  -h : Help"
+    exit 1
+}
+
+# --- Procesamiento de Argumentos (Diseño de Interfaz) ---
+while getopts "t:p:h" opt; do
+    case $opt in
+        t) [[ "$OPTARG" == "ppt" ]] && EXT="pptx"
+           [[ "$OPTARG" == "doc" ]] && EXT="docx" ;;
+        p) PREFIX="$OPTARG" ;;
+        h) usage ;;
+        *) usage ;;
+    esac
+done
+
+# Validar que el tipo fue seleccionado
+if [[ -z "$EXT" ]]; then
+    echo "❌ Error: Debes especificar el tipo con -t [ppt|doc]"
+    usage
+fi
+
+# --- Lógica de Sistema ---
+
+# 1. Buscar archivos
+files=(*.$EXT)
+total=${#files[@]}
+
+if [[ ! -e ${files[1]} ]]; then # Verifica si el primer elemento existe
+    echo "❌ No se encontraron archivos .$EXT en este directorio."
+    exit 1
+fi
+
+# 2. Reconfirmación
+echo "📝 Tipo: $EXT | Carpeta: $OUT_DIR | Prefijo: ${PREFIX:-"(ninguno)"}"
+echo -n "⚠️  Se procesarán $total archivos. ¿Continuar? (y/n): "
+read -k 1 res
+echo ""
+
+if [[ $res != "y" && $res != "Y" ]]; then
+    echo "🚫 Operación cancelada."
+    exit 0
+fi
+
+# 3. Preparar entorno
+[[ ! -d "$OUT_DIR" ]] && mkdir -p "$OUT_DIR"
+
+# 4. Ejecución del Core (LibreOffice)
+echo "🚀 Convirtiendo..."
+/Applications/LibreOffice.app/Contents/MacOS/soffice --headless --convert-to pdf *.$EXT --outdir "$OUT_DIR"
+
+# 5. Lógica de Prefijo (Transformación)
+if [[ -n "$PREFIX" ]]; then
+    echo "🏷️  Aplicando prefijo '$PREFIX'..."
+    for f in "$OUT_DIR"/*.pdf; do
+        filename=$(basename "$f")
+        # Solo renombra si no tiene ya el prefijo (evita duplicados)
+        if [[ "$filename" != "$PREFIX"* ]]; then
+            mv "$f" "$OUT_DIR/$PREFIX$filename"
+        fi
+    done
+fi
+
+echo "✅ Proceso completado. Archivos en: $OUT_DIR"
