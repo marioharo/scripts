@@ -8,7 +8,7 @@ EXT=""
 
 # Función de ayuda (Help)
 usage() {
-    echo "Use: to-pdf -t [ppt|doc] [-p prefijo]"
+    echo "Use: -t [ppt|doc] [-p prefijo]"
     echo "Options:"
     echo "  -t : Tipo de archivo a convertir (ppt o doc) [Obligatorio]"
     echo "  -p : Prefijo opcional"
